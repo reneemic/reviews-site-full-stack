@@ -1,0 +1,48 @@
+* {
+	font-family: "Arial";
+	text-align: center;
+	color: white;
+}
+
+h1 {
+	text-shadow: 2px 2px rgb(220, 223, 232);
+	font-size: 55px;
+	text-align: center;
+}
+
+.home {
+	font-size: 60px;
+}
+
+.navbar {
+	color: white;
+	background-color: #1d8eff;
+}
+.content {
+	background-color: #7f0040;
+}
+
+p {
+	margin: 30px;
+	font-size: 22px;
+}
+
+h2 {
+	font-size: 40px;
+}
+
+a:link {
+	color: #ff1d8e;
+}
+
+a:visited {
+	color: #a4a4a4;
+}
+
+a:hover {
+	color: #6a5acd;
+}
+
+a:active {
+	color: #6a5acd;
+}

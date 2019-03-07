@@ -15,21 +15,31 @@ public class Category {
 	private Long id;
 	
 	private String name;
+	
+	private String image;
     
 	@ManyToMany (mappedBy = "categories")
 	private Collection<Review> reviews;
+
+	
 	
 	public Category() {
 	}
     
 	
-	public Category(String name) {
+	public Category(String name, String image) {
 		this.name = name;
+		this.image = image;
 	}
 
 	public String getName() {
 		return name;
 	}
+	
+	public String getImage() {
+		return image;
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title> Restaurant Review Categories</title>
+<link rel= "stylesheet" type= "text/css" href = "./style.css" th:href= "@{css/style.css}">
+</head>
+
+<body>
+	<header>
+	<h1 id="categoriesTitle">Restaurant and Bar Review Categories:</h1>
+	</header>
+	
+	<div th:id= "categories" th:each ="category: ${categories}">
+		<h2>
+		<a th:href="@{/category(id=${category.id})}" th:text="${category.name}"></a>
+		</h2>
+	</div>
+
+	<footer><a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a> </footer>
+
+</html>

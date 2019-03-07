@@ -10,9 +10,11 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import org.assertj.core.util.Arrays;
+import java.util.Arrays;
 
 @Entity
 public class Review {
@@ -23,20 +25,28 @@ public class Review {
 	@GeneratedValue
 	private long id;
 	private String name;
+	
+	@Lob
 	private String description;
+	
+	private String image;
 	
 	@ManyToMany
 	private Collection<Category> categories;
 	
+	@OneToMany (mappedBy = "review")
+	private Collection<ReviewEntry> reviewEntries;
 	
-
+	
 	public Review() {
 	
 	}
 	
-	public Review(String name, String description, Category...categories) {
+	
+	public Review(String name, String description, String image, Category...categories) {
 		this.name = name;
 		this.description = description;
+		this.image = image;
 		this.categories = new HashSet<>(Arrays.asList(categories));
 		
 	}
@@ -53,8 +63,17 @@ public class Review {
 		return description;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	
 	public Collection<Category> getCategories() {
 		return categories;
+	}
+	
+	public Collection <ReviewEntry> getReviewEntries() {
+		return reviewEntries;
 	}
 
 	@Override
@@ -78,6 +97,8 @@ public class Review {
 			return false;
 		return true;
 	}
+
+	
 
 	
 
