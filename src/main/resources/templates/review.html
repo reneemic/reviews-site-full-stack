@@ -3,23 +3,29 @@
 
 <head>
 	<title>Review</title>
-	<link rel= "stylesheet" type= "text/css" href = "./style.css" th:href= "@{css/style.css}">
+	<link rel= "stylesheet" type= "text/css" href = "./style.css" th:href= "@{style.css}">
 </head>
 <body>
-	<h1>The Review:</h1>
+	<h1>Your Chosen Review</h1>
+
+
 	
 	<div th:id="individualReview" th:each= "review: ${reviews}">		
 		 
-		<p th:id="individualReviewName" th:text = "${review.name}"></p>
-		<p th:id="individualReviewContent" th:text = "${review.content}"></p>
-		<img th:src="@{'/images/' + ${review.url} + '.jpg'}" style="width:500px; height:400px;" class = "center"/>
+		<h2 th:text = "${review.name}"></h2>
+		<p img th:src="${review.image}" style="width:500px;height:300px;" class = "center"/>
+		<p th:text = "${review.description}"></p>
+		
+
+	</div>
+
 		<footer>
 		<a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a><a href ="http://localhost:8080/show-categories">Back to Categories</a>
 		
 		</footer>
 
 
-	</div>
+	
 
 </body>
 </html>

@@ -2,19 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Review</title>
-	<link rel= "stylesheet" type= "text/css" href = "./style.css" th:href= "@{css/style.css}">
+	<title>Reviews</title>
+	<link rel= "stylesheet" type= "text/css" href = "./style.css" th:href= "@{style.css}">
 </head>
 <body>
-	<h1>The Review:</h1>
+	<header>
+		<h1 id"home">Reviews of 5 Cleveland Restaurants and Bars</h1>
+	</header>
 	
-	<div th:id="individualReview" th:each= "review: ${reviews}">		
-		 
-		<p th:id="individualReviewName" th:text = "${review.name}"></p>
-		<p th:id="individualReviewContent" th:text = "${review.content}"></p>
-		<img th:src="@{'/images/' + ${review.url} + '.jpg'}" style="width:500px; height:400px;" class = "center"/>
-		<footer>
-		<a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a><a href ="http://localhost:8080/show-categories">Back to Categories</a>
+	<div th:each= "review: ${reviews}">		
+		<p><a th:href="@{/review(id=${review.id})}" th:text="${review.name}"></a></p>
+	</div>
+
+	<footer>
+		<a href ="http://localhost:8080/show-categories">Back to Categories</a>
 		
 		</footer>
 
