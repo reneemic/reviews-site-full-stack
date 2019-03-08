@@ -6,18 +6,20 @@ line-height: 1.6em;
 box-sizing: border-box;
 margin: 0;
 padding: 0;
-background: lightgray;
+
 
 }
 
 h1 {
 	font-size: 55px;
 	text-align: center;
+	color: #ad015a;
 }
 
 section div {
 	display: grid;
 	grid-template-rows: 2;
+	justify-content: center;
 	
 }
 
@@ -63,5 +65,5 @@ footer a {
 }
 
 footer a:hover {
-	background: #f97a02;
+	background:  aliceblue;
 }
