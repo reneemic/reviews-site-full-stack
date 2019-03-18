@@ -21,6 +21,8 @@ CategoryRepository categoryRepo;
 @Resource
 ReviewEntryRepository reviewEntryRepo;
 
+private Object newReview;
+
 	@RequestMapping("/review")
 	public String findOneReview(@RequestParam(value="id") long id, Model model) throws ReviewNotFoundException {
 		Optional<Review> review = reviewRepo.findById(id);
@@ -79,6 +81,18 @@ ReviewEntryRepository reviewEntryRepo;
 		return "all entries";
 	}
 
+	@RequestMapping("/add-review")
+	public String addReview(String reviewName, String reviewDescription, String categoryName) {
+		Category category = categoryRepo.findByName(categoryName);
+		Review newReview = reviewRepo.findByName(reviewName);
+		if(newReview==null) {
+			newReview = new Review(reviewName, reviewDescription, category);
+			reviewRepo.save(newReview);
+		}
+		return "redirect:/show-reviews";
+	}
+
+	 
 }
 
 

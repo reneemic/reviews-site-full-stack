@@ -13,13 +13,38 @@
 	<div th:id="individualReview" th:each= "review: ${reviews}">		
 		 
 		<h2 th:text = "${review.name}"></h2>
-		<p img th:src="${review.image}" style="width:500px;height:300px;" class = "center"/>
+		<img th:src="${review.image}" style="width:500px;height:300px;" class = "center">
 		<p th:text = "${review.description}"></p>
-		
-
 	</div>
+	
+	<form>
+	
+	<form method="POST">
+	<div>
+	<label>Enter Review Name</label>
+	<input type="text" name="reviewName"/>
+	</div>
+	
+	<div>
+	<label>Enter Review Description</label>
+	<input type="text" name="reviewDescription"/>
+	</div>
+	
+	<div>
+	<label>Enter Category</label>
+	<input type="text" name="categoryName"/>
+	</div>
+	
+	
+	<div>
+	<button th:formaction="@{add-review}"> Add Review </button>
+	</div>
+	
+	</form>
 
 		<footer>
 		<a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a><a href ="http://localhost:8080/show-categories">Back to Categories</a>
 		
 		</footer>
+</body>
+</html>
