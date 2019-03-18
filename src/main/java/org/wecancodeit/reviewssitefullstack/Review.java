@@ -51,6 +51,13 @@ public class Review {
 		
 	}
 
+	public Review(String name, String description, Category...categories) {
+		this.name = name;
+		this.description = description;
+		this.categories = new HashSet<>(Arrays.asList(categories));
+	}
+
+
 	public long getId() {
 		return id;
 	}

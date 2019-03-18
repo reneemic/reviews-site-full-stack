@@ -8,18 +8,16 @@
 <body>
 	<h1>Your Chosen Review</h1>
 
-
-	
 	<div th:id="individualReview" th:each= "review: ${reviews}">		
 		 
 		<h2 th:text = "${review.name}"></h2>
-		<p img th:src="${review.image}" style="width:500px;height:300px;" class = "center"/>
+		<img th:src="${review.image}" style="width:500px;height:300px;" class = "center">
 		<p th:text = "${review.description}"></p>
-		
+    </div>
 
-	</div>
-
-		<footer>
+	<footer>
 		<a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a><a href ="http://localhost:8080/show-categories">Back to Categories</a>
-		
-		</footer>
+	</footer>
+
+</body>
+</html>

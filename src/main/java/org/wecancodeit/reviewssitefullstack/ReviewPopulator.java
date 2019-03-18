@@ -60,7 +60,7 @@ public class ReviewPopulator implements CommandLineRunner {
 	    	   happyDog = reviewRepo.save(happyDog);
 	    	   
 	    Review humbleWineBar = new Review ("Humble Wine Bar",
-	    		"Happy Dog is a ton of fun (although fruit loops on a hot dog is a little too  much for me). The make-your-own dog approach is novel, but what I enjoy most are the speakers and events they've hosted over the years. The underdog is a fun tucked away venue and they truly do have an underlying social consciousness that I value.", 
+	    		"Spacious patio and very affordable happy hour menu full of $5 items. The interior is clean and charming with a stone pizza oven as its centerpiece. Loved our build-your-own cheese plate. Our server was attentive and informative, too. When the wine I ordered was unavailable, she came prepared with a sample of her suggested substitute\"", 
 	    		"images/wine.jpg", wine, bar, food);
 	    	   humbleWineBar = reviewRepo.save(humbleWineBar);
 	    	   

@@ -16,6 +16,31 @@
 		</h2>
 	</div>
 
+	<form>
+	
+	<form method="POST">
+	<div>
+	<label>Enter Review Name</label>
+	<input type="text" name="reviewName"/>
+	</div>
+	
+	<div>
+	<label>Enter Review Description</label>
+	<input type="text" name="reviewDescription"/>
+	</div>
+	
+	<div>
+	<label>Enter Category</label>
+	<input type="text" name="categoryName"/>
+	</div>
+	
+	
+	<div>
+	<button th:formaction="@{add-review}"> Add Review </button>
+	</div>
+	
+	</form>
+
 	<footer><a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a> </footer>
 
 </html>
