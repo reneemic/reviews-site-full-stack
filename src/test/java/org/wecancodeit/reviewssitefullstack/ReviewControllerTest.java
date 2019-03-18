@@ -21,6 +21,7 @@ public class ReviewControllerTest {
 	
 	@Mock
 	private Review review;
+	Long reviewId;
 	
 	@Mock
 	private Review anotherReview;
@@ -125,6 +126,19 @@ public class ReviewControllerTest {
 		when(reviewRepo.save(newReview)).thenReturn(newReview);
 	}
 	
+	@Test
+	public void ShouldBeAbleToRemoveReviewFromModelByName() {
+		String reviewName =review.getName();
+		when(reviewRepo.findByName(reviewName)).thenReturn(review);
+		underTest.deleteReviewByName(reviewName);
+		verify(reviewRepo).delete(review);
+	}
+	
+	@Test
+	public void ShouldBeAbleToRemoveById() {
+		underTest.deleteReviewById(reviewId);
+		verify(reviewRepo).deleteById(reviewId);
+	}
 	
 	
 }

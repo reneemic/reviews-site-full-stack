@@ -92,6 +92,26 @@ private Object newReview;
 		return "redirect:/show-reviews";
 	}
 
+	
+	@RequestMapping("/delete-review")
+	public String deleteReviewByName(String reviewName) {
+
+		if(reviewRepo.findByName(reviewName) !=null) {
+			Review deletedReview = reviewRepo.findByName(reviewName);
+			reviewRepo.delete(deletedReview);
+		}
+		return "redirect:/show-reviews";
+	}
+
+	@RequestMapping("/del-review")
+	public String deleteReviewById(Long reviewId) {
+		
+		reviewRepo.deleteById(reviewId);
+		
+		return "redirect:/reviews";
+		
+	}
+
 	 
 }
 
