@@ -15,8 +15,28 @@
 		<p th:text = "${review.description}"></p>
     </div>
 
+<section>
+					<article>
+						<form method="POST">
+							<div id="add-comment">
+								<label>Add A Comment:</label>
+								<input type="text" name="comment" />
+							</div>
+							<div>
+								<input name="id" type="hidden" th:value="${review.id}" />
+							</div>
+							<div>
+								<button type="submit" th:formaction="@{/add-comment}">Add A Comment</button>
+							</div>
+						</form>
+						<ul th:each="comment: ${review.comments}">
+							<li th:text="'Comment: ' + ${comment.comment}"></li>
+						</ul>
+					</article>	
+</section>
 	<footer>
-		<a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a><a href ="http://localhost:8080/show-categories">Back to Categories</a>
+		<a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a>
+		<a href ="http://localhost:8080/show-categories">Back to Categories</a>
 	</footer>
 
 </body>

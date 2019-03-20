@@ -147,5 +147,19 @@ public class JPAMappingTest {
 			review = result.get();
 			assertThat(review.getReviewEntries(), containsInAnyOrder(entry, entry2));
 		}
+		
+		@Test
+		public void shouldSortReviews() {
+			Review humbleWineBar = new Review("Humble Wine Bar", "description");
+			humbleWineBar = reviewRepo.save(humbleWineBar);
+			
+			Review mrHero = new Review("Mr. Hero", "description");
+			mrHero = reviewRepo.save(mrHero);
+			
+			entityManager.flush();
+			entityManager.clear();	
+			
+			
+		}
 
 }

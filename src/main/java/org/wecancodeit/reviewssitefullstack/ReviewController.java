@@ -112,6 +112,14 @@ private Object newReview;
 		
 	}
 
+	@RequestMapping("/find-by-category")
+	public String findReviewByCategory(String categoryName, Model model) {
+		Category category = categoryRepo.findByName(categoryName);
+		model.addAttribute("reviews", reviewRepo.findByCategoriesContains(category));
+		
+		return "/category";
+	}
+	}
 	 
 }
 

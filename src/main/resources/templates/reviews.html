@@ -7,65 +7,16 @@
 </head>
 <body>
 	<header>
-		<h1 id"home">Reviews of 5 Cleveland Restaurants and Bars</h1>
+		<h1 id="home">Reviews of 5 Cleveland Restaurants and Bars</h1>
 	</header>
 	
 	<div th:each= "review: ${reviews}">		
 		<p><a th:href="@{/review(id=${review.id})}" th:text="${review.name}"></a></p>
 	</div>
 
-	<form>
 	
-	<form method="POST">
-	<div>
-		<label>Enter Review Name</label>
-		<input type="text" name="reviewName"/>
-	</div>
-	
-	<div>
-		<label>Enter Review Description</label>
-		<input type="text" name="reviewDescription"/>
-	</div>
-	
-	<div>
-		<label>Enter Category</label>
-		<input type="text" name="categoryName"/>
-	</div>
-	
-	
-	<div>
-		<button th:formaction="@{add-review}"> Add Review </button>
-	</div>
-	
-	</form>
-
-	<form method="POST">
-	<div>
-		<label>Enter Review Name</label>
-		<input type="text" name="reviewName"/>
-	</div>
-
-	<div>
-		<button th:formaction="@{/delete-review}"> Delete Review </button>
-	</div>
-	
-	</form>
-
-<form method="GET">
-	<div>
-		<label>Enter Category Name</label>
-		<input type="text" name="categoryName"/>
-	</div>
-
-	<div>
-		<button th:formaction="@{/find-by-category}"> Find Categories </button>
-	</div>
-	
-	</form>
-
-
 	<footer>
-		<a href ="http://localhost:8080/show-categories">Back to Categories</a>
+		<h3><a href ="http://localhost:8080/show-categories">Back to Categories</a></h3>
 	</footer>
 
 

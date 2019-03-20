@@ -18,10 +18,22 @@
 		<a th:href="@{/review(id=${review.id})}" th:text="${review.name}"></a>
 		</h2>
 		
-	</div>
-	<footer><a href ="http://localhost:8080/show-categories">Back to categories home</a>
-		<a href ="http://localhost:8080/show-reviews">Back to reviews home</a>
-	</footer>
+	<section class="category-section-two">
+				<article th:each="category: ${category.reviews}">
+					<ul class="categoryUl">
+						<li><h4><a th:href="@{/review(id=${category.id})}" th:text="${category.title}"></a></h4></li>
+						<p><small>Tags: <a th:each="tag: ${category.tags}" th:href="@{/tag(id=${tag.id})}" th:text="${tag}" ></a></small></p>
+					</ul>
+				</article>
+			</section>
 
+	<footer>
+			<section>
+				<h3><a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a></h3>
+				<h3><a href ="http://localhost:8080/show-categories">Back to Categories</a></h3>
+				<h3><a href="http://localhost:8080/tags">Tags</a></h3>
+			</section>
+	</footer>
+	
 </body>
 </html>

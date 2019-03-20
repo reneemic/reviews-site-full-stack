@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Tags</title>
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+</head>
+<body>
+	<div class="container">	
+		<header>
+			<h1 th:text="${tag.tagName}"></h1>
+		</header>
+		<main>
+			<section class="review-section-one">
+				<article>
+					<h2>Reviews associated with <em th:text="${tag.tagName}"></em></h2>
+				</article>
+			</section>
+			<section class="review-section-two" th:each="tag: ${tag.reviews}">
+				<ul>
+					<li><h4><a th:href="@{/review(id=${tag.id})}" th:text="${tag.title}"></a></h4></li>
+				</ul>
+			</section>
+			<section>
+				<form method="POST">
+					<div>
+						<label>Enter Title:</label>
+						<input type="text" name="titleName" />
+					</div>
+					<div>
+						<button>Add Title:</button>
+					</div>
+				</form>
+				<form method="POST">
+					<div>
+						<label>Remove Title:</label>
+						<input type="text" name="titleName" />
+					</div>
+					<div>
+						<button>Remove Title</button>
+					</div>
+				</form>
+			</section>
+		</main>
+		
+		<footer>
+			<section>
+				<h3><a href ="http://localhost:8080/show-reviews">Back to Reviews Home</a></h3>
+				<h3><a href ="http://localhost:8080/show-categories">Back to Categories</a></h3>
+				<h3><a href="http://localhost:8080/tags">Tags</a></h3>
+			</section>
+	</footer>
+	
+	</div>
+</body>
+</html>
