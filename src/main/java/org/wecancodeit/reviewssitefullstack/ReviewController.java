@@ -21,7 +21,9 @@ CategoryRepository categoryRepo;
 @Resource
 ReviewEntryRepository reviewEntryRepo;
 
-private Object newReview;
+@Resource
+private TagRepository tagRepo;
+
 
 	@RequestMapping("/review")
 	public String findOneReview(@RequestParam(value="id") long id, Model model) throws ReviewNotFoundException {
@@ -81,46 +83,19 @@ private Object newReview;
 		return "all entries";
 	}
 
-	@RequestMapping("/add-review")
-	public String addReview(String reviewName, String reviewDescription, String categoryName) {
-		Category category = categoryRepo.findByName(categoryName);
-		Review newReview = reviewRepo.findByName(reviewName);
-		if(newReview==null) {
-			newReview = new Review(reviewName, reviewDescription, category);
-			reviewRepo.save(newReview);
-		}
-		return "redirect:/show-reviews";
+	@RequestMapping(value = "tags")
+	public String getAllTags(Model model) {
+		model.addAttribute("tags", tagRepo.findAll());
+		return "tags";
 	}
 
-	
-	@RequestMapping("/delete-review")
-	public String deleteReviewByName(String reviewName) {
-
-		if(reviewRepo.findByName(reviewName) !=null) {
-			Review deletedReview = reviewRepo.findByName(reviewName);
-			reviewRepo.delete(deletedReview);
-		}
-		return "redirect:/show-reviews";
-	}
-
-	@RequestMapping("/del-review")
-	public String deleteReviewById(Long reviewId) {
-		
-		reviewRepo.deleteById(reviewId);
-		
-		return "redirect:/reviews";
-		
-	}
-
-	@RequestMapping("/find-by-category")
-	public String findReviewByCategory(String categoryName, Model model) {
-		Category category = categoryRepo.findByName(categoryName);
-		model.addAttribute("reviews", reviewRepo.findByCategoriesContains(category));
-		
-		return "/category";
+	@RequestMapping("tag")
+	public String getATag(@RequestParam Long id, Model model) {
+		model.addAttribute("tag", tagRepo.findById(id));
+		return "tag";
 	}
 	}
 	 
-}
+
 
 

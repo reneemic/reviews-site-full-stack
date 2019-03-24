@@ -5,73 +5,51 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Category {
 
 	@Id
 	@GeneratedValue
-	private Long id;
-	
-	private String name;
-	
-	private String image;
-    
-	@ManyToMany (mappedBy = "categories")
+	private long id;
+	private String categoryName;
+
+	@OneToMany(mappedBy = "category")
 	private Collection<Review> reviews;
 
-	
-	
 	public Category() {
 	}
-    
-	
-	public Category(String name, String image) {
-		this.name = name;
-		this.image = image;
+
+	public Category(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
-	public String getName() {
-		return name;
+	public Collection<Review> getReviews() {
+		return reviews;
 	}
-	
-	public String getImage() {
-		return image;
-	}
-	
-	public Long getId() {
+
+	public long getId() {
 		return id;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return ((Long) id).hashCode();
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Category other = (Category) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+		}
+		return id == ((Category) obj).id;
 	}
-
-	
-	
-	
 }
