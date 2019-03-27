@@ -1,20 +1,17 @@
 package org.wecancodeit.reviewssitefullstack;
 
+import static java.util.Arrays.asList;
+
 import java.util.Collection;
-
 import java.util.HashSet;
-import java.util.Set;
-import java.util.Map;
-
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import java.util.Arrays;
 
 @Entity
 public class Review {
@@ -28,36 +25,50 @@ public class Review {
 	
 	@Lob
 	private String description;
-	
 	private String image;
 	
+	@OneToMany(mappedBy = "review")
+	private Collection<Comment> comments;
+
 	@ManyToMany
-	private Collection<Category> categories;
+	private Collection <Category> category;
+
+	@ManyToMany
+	private Collection<Tag> tags;
+
 	
 	@OneToMany (mappedBy = "review")
 	private Collection<ReviewEntry> reviewEntries;
 	
-	
+		
 	public Review() {
 	
 	}
-	
-	
-	public Review(String name, String description, String image, Category...categories) {
+		
+	public Review(String name, String description, String image, Category...categories, Tag...tags) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
-		this.categories = new HashSet<>(Arrays.asList(categories));
+		this.category = (Collection<Category>) category;
+		this.tags = new HashSet<>(asList(tags));
 		
 	}
 
-	public Review(String name, String description, Category...categories) {
-		this.name = name;
-		this.description = description;
-		this.categories = new HashSet<>(Arrays.asList(categories));
+	public Collection<Tag> getTags() {
+		return tags;
 	}
 
-
+	public Collection<Comment> getComments() {
+		return comments;
+	}
+  
+	public Collection<Category> getCategories() {
+		return category;
+	}
+	public Collection <ReviewEntry> getReviewEntries() {
+		return reviewEntries;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -75,14 +86,6 @@ public class Review {
 	}
 
 	
-	public Collection<Category> getCategories() {
-		return categories;
-	}
-	
-	public Collection <ReviewEntry> getReviewEntries() {
-		return reviewEntries;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -104,6 +107,8 @@ public class Review {
 			return false;
 		return true;
 	}
+
+	
 
 	
 
