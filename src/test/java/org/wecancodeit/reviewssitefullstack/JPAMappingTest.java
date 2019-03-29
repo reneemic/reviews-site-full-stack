@@ -3,6 +3,7 @@ package org.wecancodeit.reviewssitefullstack;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
@@ -15,6 +16,15 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import org.wecancodeit.reviewssitefullstack.Category;
+import org.wecancodeit.reviewssitefullstack.CategoryRepository;
+import org.wecancodeit.reviewssitefullstack.Comment;
+import org.wecancodeit.reviewssitefullstack.CommentRepository;
+import org.wecancodeit.reviewssitefullstack.Review;
+import org.wecancodeit.reviewssitefullstack.ReviewRepository;
+import org.wecancodeit.reviewssitefullstack.Tag;
+import org.wecancodeit.reviewssitefullstack.TagRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
@@ -32,134 +42,116 @@ public class JPAMappingTest {
 	@Resource
 	private TestEntityManager entityManager;
 	
-		
+	@Resource
+	private TagRepository tagRepo;
+
+	@Resource
+	private CommentRepository commentRepo;
+
 	@Test
-	public void shouldSaveAndLoadCategory() {
-		Category category = categoryRepo.save(new Category("category", "image"));
-		long categoryId = category.getId();
-		
-		entityManager.flush();
-		entityManager.clear();
-		
-		Optional<Category>result = categoryRepo.findById(categoryId);
-		result.get();
-		assertThat(category.getName(), is("category"));
-			
-	}
-	
-	@Test
-	public void shouldGenerateCategoryId() {
-		Category category = categoryRepo.save(new Category("category", "image"));
-		long categoryId = category.getId();
-		
-		entityManager.flush();
-		entityManager.clear();
-		
-		assertThat(categoryId, is(greaterThan(0L)));
-	}
-	
-	
-	@Test
-	public void shouldSaveandLoadReview() {
-	Review review = new Review("review name", "description", "image");
-	review = reviewRepo.save(review);
-	long reviewId = review.getId();
-	
-	entityManager.flush();
-	entityManager.clear();
-	
-	Optional<Review> result = reviewRepo.findById(reviewId);
-	result.get();
-	assertThat(review.getName(), is("review name"));
-	}
-	
-	@Test
-	public void shouldEstablishReviewtoCategoryRelationships() {
-		//category is not the owner categories must be created
-		Category food = categoryRepo.save(new Category ("Food Served", "image"));
-		Category wine = categoryRepo.save(new Category ("Wine Bar", "image"));
-		Category bar = categoryRepo.save(new Category("Bars", "image"));
-		Category theme = categoryRepo.save(new Category ("Themes", "image"));
-		
-		Review review = new Review("Restaurant and Bars", "description","image" ,food, wine, bar, theme);
+	public void shouldSaveAndLoadReview() {
+		Review review = new Review(null, "Title", "imageUrl", "description");
 		review = reviewRepo.save(review);
 		long reviewId = review.getId();
-		
+
 		entityManager.flush();
 		entityManager.clear();
-		
-		Optional<Review> result = reviewRepo.findById(reviewId);
-		review = result.get();
-		assertThat(review.getCategories(), containsInAnyOrder(food, wine, bar, theme));
+
+		review = reviewRepo.findOne(reviewId);
+		assertThat(review.getTitle(), is("Title"));
 	}
 
 	@Test
-	public void shouldFindReviewForCategory() {
-		
-		Category food = categoryRepo.save(new Category("food", "image"));
-		
-		Review theClevelander = reviewRepo.save(new Review("The Clevelander", "description","image", food));
-		Review happyDog = reviewRepo.save(new Review("Happy Dog", "description","image", food));
-		Review humbleWineBar = reviewRepo.save(new Review("Humble Wine Bar","description", "image"));
-		
-		
-		entityManager.flush();
-		entityManager.clear();
-		
-		Collection<Review> reviewsForCategory = reviewRepo.findByCategoriesContains(food);
-		
-		assertThat(reviewsForCategory, containsInAnyOrder(theClevelander, happyDog));
-	}
-		
-	@Test
-	public void shouldFindReviewsForCategoryId() {
-		Category wine = categoryRepo.save(new Category("Wine", "image"));
-		long categoryId = wine.getId();
-		
-		Review happyDog = reviewRepo.save(new Review("Happy Dog", "description", "image", wine));
-		Review humbleWineBar = reviewRepo.save(new Review("Humble Wine Bar", "description", "image", wine));
-		
-		entityManager.flush();
-		entityManager.clear();
-		
-		Collection<Review>reviewsForCategory = reviewRepo.findByCategoriesId(categoryId);
-		
-		assertThat(reviewsForCategory, containsInAnyOrder(happyDog, humbleWineBar));
-		
-	}
-		
-		@Test
-		public void shouldSaveReviewEntrytoReviewRelationship() {
-			Review review = new Review ("name", "description", "image");
-			reviewRepo.save(review);
-			long reviewId = review.getId();	
-			
-			ReviewEntry entry = new ReviewEntry("title", review);
-			reviewEntryRepo.save(entry);
-			
-			ReviewEntry entry2 = new ReviewEntry("title two", review);
-			reviewEntryRepo.save(entry2);
-			
-			entityManager.flush();
-			entityManager.clear();
-			
-			Optional<Review>result = reviewRepo.findById(reviewId);
-			review = result.get();
-			assertThat(review.getReviewEntries(), containsInAnyOrder(entry, entry2));
-		}
-		
-		@Test
-		public void shouldSortReviews() {
-			Review humbleWineBar = new Review("Humble Wine Bar", "description");
-			humbleWineBar = reviewRepo.save(humbleWineBar);
-			
-			Review mrHero = new Review("Mr. Hero", "description");
-			mrHero = reviewRepo.save(mrHero);
-			
-			entityManager.flush();
-			entityManager.clear();	
-			
-			
-		}
+	public void shouldSaveReviewToCategoryRelationship() {
+		Category category = new Category("Food");
+		categoryRepo.save(category);
+		long categoryId = category.getId();
 
+		Review first = new Review(category, "Title", "imageUrl", "description");
+		first = reviewRepo.save(first);
+
+		Review second = new Review(category, "Title", "imageUrl", "description");
+		second = reviewRepo.save(second);
+
+		entityManager.flush();
+		entityManager.clear();
+
+		category = categoryRepo.findOne(categoryId);
+		assertThat(category.getReviews(), containsInAnyOrder(first, second));
+	}
+
+	@Test
+	public void shouldSaveAndLoadTag() {
+		Tag tag = tagRepo.save(new Tag("tagName"));
+		long tagId = tag.getId();
+
+		entityManager.flush();
+		entityManager.clear();
+
+		tag = tagRepo.findOne(tagId);
+		assertThat(tag.getTagName(), is("tagName"));
+	}
+
+	@Test
+	public void shouldEstablishReviewToTagRelationships() {
+		Tag fun = tagRepo.save(new Tag("Fun"));
+		Tag wine = tagRepo.save(new Tag("Wine"));
+
+		Review review = new Review(null, "Title", "imageUrl", "description", fun, wine);
+		review = reviewRepo.save(review);
+		long reviewName = review.getId();
+
+		review = reviewRepo.findOne(reviewName);
+		assertThat(review.getTags(), containsInAnyOrder(fun, wine));
+	}
+
+	@Test
+	public void shouldEstablishTagToReviewsRelationship() {
+		Tag tag = tagRepo.save(new Tag("Wine"));
+		long tagId = tag.getId();
+
+		Review reviewNameOne = new Review(null, "reviewNameOne", "imageUrl", "description", tag);
+		reviewNameOne = reviewRepo.save(reviewNameOne);
+
+		Review reviewNameTwo = new Review(null, "reviewNameTwo", "imageUrl", "description", tag);
+		reviewNameTwo = reviewRepo.save(reviewNameTwo);
+
+		entityManager.flush();
+		entityManager.clear();
+
+		tag = tagRepo.findOne(tagId);
+		assertThat(tag.getReviews(), containsInAnyOrder(reviewNameOne, reviewNameTwo));
+	}
+
+	@Test
+	public void shouldReturnReviewNameImageAndDescription() {
+		Tag tag = tagRepo.save(new Tag("Wine"));
+
+		Review underTest = new Review(null, "Title", "imageUrl", "Description", tag);
+		String check = underTest.getTitle();
+		String check2 = underTest.getImageUrl();
+		String check3 = underTest.getDescription();
+
+		assertEquals(check, "Title");
+		assertEquals(check2, "imageUrl");
+		assertEquals(check3, "Description");
+	}
+
+	@Test
+	public void shouldEstablishSaveCommentToReviewRelationship() {
+		Review review = new Review(null, "Title", "imageUrl", "Description");
+		reviewRepo.save(review);
+		long reviewId = review.getId();
+
+		Comment first = new Comment("Comment1", review);
+		first = commentRepo.save(first);
+		Comment second = new Comment("Comment2", review);
+		second = commentRepo.save(second);
+
+		entityManager.flush();
+		entityManager.clear();
+
+		review = reviewRepo.findOne(reviewId);
+		assertThat(review.getComments(), containsInAnyOrder(first, second));
+	}
 }

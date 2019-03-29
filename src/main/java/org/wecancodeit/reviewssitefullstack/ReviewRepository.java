@@ -14,6 +14,8 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
 	void save(ReviewEntry reviewEntry);
 
+	Review findOne(long reviewId);
+
 	
 
 	
